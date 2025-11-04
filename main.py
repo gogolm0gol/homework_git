@@ -8,12 +8,61 @@ app = FastAPI()
 
 @app.get("/", response_class=HTMLResponse)
 def home():
-    return {"message": "Welcome to the FastAPI Weather App!"}
+    return show_weather()
+
+
+@app.get("/about", response_class=HTMLResponse)
+def about():
+    html = """
+    <html>
+        <head>
+            <title>About | Weather App</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    background: linear-gradient(to top right, #89f7fe, #66a6ff);
+                    color: #333;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    height: 100vh;
+                    text-align: center;
+                }
+                .card {
+                    background: white;
+                    padding: 30px;
+                    border-radius: 20px;
+                    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+                    width: 400px;
+                }
+                a {
+                    color: #0077ff;
+                    text-decoration: none;
+                    font-weight: bold;
+                }
+                a:hover {
+                    text-decoration: underline;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="card">
+                <h1>About Weather App</h1>
+                <p>This app shows random weather data for different Ukrainian cities 🌦</p>
+                <p>Created with ❤️ using FastAPI.</p>
+                <a href="/">⬅ Back to Home</a>
+            </div>
+        </body>
+    </html>
+    """
+    return html
 
 
 def show_weather():
     cities = ["Kyiv", "Odesa", "Lviv", "Kharkiv", "Dnipro", "Uzhhorod", "Chernihiv"]
     city = random.choice(cities)
+
     temperature = random.randint(-5, 35)
     conditions = random.choice(["☀️ Sunny", "🌧 Rainy", "⛅ Cloudy", "❄️ Snowy", "🌩 Stormy", "🌫 Foggy"])
     humidity = random.randint(30, 90)
@@ -50,6 +99,14 @@ def show_weather():
                     font-size: 40px;
                     margin: 10px 0;
                 }}
+                a {{
+                    color: #0077ff;
+                    text-decoration: none;
+                    font-weight: bold;
+                }}
+                a:hover {{
+                    text-decoration: underline;
+                }}
             </style>
         </head>
         <body>
@@ -60,6 +117,7 @@ def show_weather():
                 <p>💧 Humidity: {humidity}%</p>
                 <p>🌬 Wind: {wind_speed} m/s</p>
                 <p>🕒 {time_now}</p>
+                <a href="/about">ℹ About</a>
             </div>
         </body>
     </html>
