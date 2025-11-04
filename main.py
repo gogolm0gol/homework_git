@@ -7,58 +7,6 @@ app = FastAPI()
 
 
 @app.get("/", response_class=HTMLResponse)
-def home():
-    return show_weather()
-
-
-@app.get("/about", response_class=HTMLResponse)
-def about():
-    html = """
-    <html>
-        <head>
-            <title>About | Weather App</title>
-            <style>
-                body {
-                    font-family: Arial, sans-serif;
-                    background: linear-gradient(to top right, #89f7fe, #66a6ff);
-                    color: #333;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-                    height: 100vh;
-                    text-align: center;
-                }
-                .card {
-                    background: white;
-                    padding: 30px;
-                    border-radius: 20px;
-                    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-                    width: 400px;
-                }
-                a {
-                    color: #0077ff;
-                    text-decoration: none;
-                    font-weight: bold;
-                }
-                a:hover {
-                    text-decoration: underline;
-                }
-            </style>
-        </head>
-        <body>
-            <div class="card">
-                <h1>About Weather App</h1>
-                <p>This app shows random weather data for different Ukrainian cities 🌦</p>
-                <p>Created with ❤️ using FastAPI.</p>
-                <a href="/">⬅ Back to Home</a>
-            </div>
-        </body>
-    </html>
-    """
-    return html
-
-
 def show_weather():
     cities = ["Kyiv", "Odesa", "Lviv", "Kharkiv", "Dnipro", "Uzhhorod", "Chernihiv"]
     city = random.choice(cities)
@@ -73,41 +21,7 @@ def show_weather():
     <html>
         <head>
             <title>Weather App</title>
-            <style>
-                body {{
-                    font-family: Arial, sans-serif;
-                    background: linear-gradient(to top right, #89f7fe, #66a6ff);
-                    color: #333;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-                    height: 100vh;
-                    text-align: center;
-                }}
-                .card {{
-                    background: white;
-                    padding: 30px;
-                    border-radius: 20px;
-                    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-                    width: 300px;
-                }}
-                h1 {{
-                    color: #0077ff;
-                }}
-                .temp {{
-                    font-size: 40px;
-                    margin: 10px 0;
-                }}
-                a {{
-                    color: #0077ff;
-                    text-decoration: none;
-                    font-weight: bold;
-                }}
-                a:hover {{
-                    text-decoration: underline;
-                }}
-            </style>
+            <link rel="stylesheet" href="/static/styles.css">
         </head>
         <body>
             <div class="card">
@@ -117,9 +31,30 @@ def show_weather():
                 <p>💧 Humidity: {humidity}%</p>
                 <p>🌬 Wind: {wind_speed} m/s</p>
                 <p>🕒 {time_now}</p>
-                <a href="/about">ℹ About</a>
+                <a href="/about" class="link">About App</a>
             </div>
         </body>
     </html>
     """
-    return html
+    return HTMLResponse(content=html)
+
+
+@app.get("/about", response_class=HTMLResponse)
+def about():
+    html = """
+    <html>
+        <head>
+            <title>About Weather App</title>
+            <link rel="stylesheet" href="/static/styles.css">
+        </head>
+        <body>
+            <div class="card">
+                <h1>About Weather App</h1>
+                <p>This simple FastAPI app shows random weather conditions for different Ukrainian cities 🇺🇦.</p>
+                <p>Created by Sofiya as a learning project 💻</p>
+                <a href="/" class="link">← Back to Weather</a>
+            </div>
+        </body>
+    </html>
+    """
+    return HTMLResponse(content=html)
