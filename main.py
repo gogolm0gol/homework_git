@@ -11,12 +11,12 @@ def show_weather():
     cities = ["Kyiv", "Odesa", "Lviv", "Kharkiv", "Dnipro", "Uzhhorod", "Chernihiv"]
     city = random.choice(cities)
     temperature = random.randint(-5, 35)
+    feels_like = temperature + random.randint(-3, 3)  # нова частина
     conditions = random.choice(["☀️ Sunny", "🌧 Rainy", "⛅ Cloudy", "❄️ Snowy", "🌩 Stormy", "🌫 Foggy"])
     humidity = random.randint(30, 90)
     wind_speed = round(random.uniform(1.0, 12.0), 1)
     time_now = datetime.now().strftime("%H:%M:%S")
 
-    # додаємо визначення пори року
     if temperature < 0:
         season = "❄ Winter"
     elif temperature < 15:
@@ -62,6 +62,7 @@ def show_weather():
             <div class="card">
                 <h1>Weather in {city}</h1>
                 <p class="temp">{temperature}°C</p>
+                <p>Feels like: {feels_like}°C</p>
                 <p>{conditions}</p>
                 <p>{season}</p>
                 <p>💧 Humidity: {humidity}%</p>
