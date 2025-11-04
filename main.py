@@ -7,10 +7,13 @@ app = FastAPI()
 
 
 @app.get("/", response_class=HTMLResponse)
+def home():
+    return {"message": "Welcome to the FastAPI Weather App!"}
+
+
 def show_weather():
     cities = ["Kyiv", "Odesa", "Lviv", "Kharkiv", "Dnipro", "Uzhhorod", "Chernihiv"]
     city = random.choice(cities)
-
     temperature = random.randint(-5, 35)
     conditions = random.choice(["☀️ Sunny", "🌧 Rainy", "⛅ Cloudy", "❄️ Snowy", "🌩 Stormy", "🌫 Foggy"])
     humidity = random.randint(30, 90)
